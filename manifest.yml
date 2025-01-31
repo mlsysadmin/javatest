@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: java-app
-        image: nrt.ocir.io/nr7audjfcmkp/javatest:${BUILDRUN_HASH}
+        image: nrt.ocir.io/nr7audjfcmkp/javatest:aeq5spj
 #        image: nrt.ocir.io/nrcbpbtrtyz0/regs-testing:qcft4n6
         command: ["java"]
         args: ["-jar", "target/hello-0.0.1-SNAPSHOT.jar"]
@@ -27,7 +27,7 @@ spec:
         - name: BUILDRUN_HASH
           value: "${BUILDRUN_HASH}"
       imagePullSecrets:
-        - name: asys-dev
+        - name: javatest-1
 ---
 apiVersion: v1
 kind: Service
