@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: java-app
-        image: nrt.ocir.io/nrcbpbtrtyz0/regs-testing:${BUILDRUN_HASH} # Corrected "mage" to "image"
+        image: nrt.ocir.io/nr7audjfcmkp/javatest:${BUILDRUN_HASH}
 #        image: nrt.ocir.io/nrcbpbtrtyz0/regs-testing:qcft4n6
         command: ["java"]
         args: ["-jar", "target/hello-0.0.1-SNAPSHOT.jar"]
