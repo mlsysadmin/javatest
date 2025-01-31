@@ -78,4 +78,4 @@ steps:
 outputArtifacts:
   - name: javatest
     type: DOCKER_IMAGE
-    location: javatest:latest
+    location: javatest:${BUILDRUN_HASH}
