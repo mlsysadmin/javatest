@@ -68,12 +68,12 @@ steps:
   #     cd ${OCI_WORKSPACE_DIR}/node_express
   #     npm test
 
-  - type: Command
-    timeoutInSeconds: 1200
-    name: "Build container image"
-    command: |
+#  - type: Command
+#    timeoutInSeconds: 1200
+#    name: "Build container image"
+#    command: |
 #      cd ${OCI_WORKSPACE_DIR}/github_OCI-DevOps-Java
-      docker build --pull --rm -t javatest .
+#      docker build --pull --rm -t javatest .
 
 outputArtifacts:
   - name: javatest
