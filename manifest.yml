@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-deployment
+  namespace: white
+spec:
+  selector:
+    matchLabels:
+      app: java-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+      - name: java-app
+        image: nrt.ocir.io/nrcbpbtrtyz0/regs-testing:${BUILDRUN_HASH} # Corrected "mage" to "image"
+#        image: nrt.ocir.io/nrcbpbtrtyz0/regs-testing:qcft4n6
+        command: ["java"]
+        args: ["-jar", "target/hello-0.0.1-SNAPSHOT.jar"]
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 8890
+          protocol: TCP     
+        env:
+        - name: BUILDRUN_HASH
+          value: "${BUILDRUN_HASH}"
+      imagePullSecrets:
+        - name: asys-dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-service
+  namespace: white
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8890
+  selector:
+    app: java-app
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: java-app-service
+#  namespace: white
+#  annotations:
+#    service.beta.kubernetes.io/oci-load-balancer-shape: "10Mbps"
+#    service.beta.kubernetes.io/oci-load-balancer-backend-protocol: "HTTP"
+#spec:
+#  type: LoadBalancer
+#  ports:
+#    - port: 80
+#      protocol: TCP
+#      targetPort: 8890
+#  selector:
+#    app: java-app
+#-------------------------------------------------------------------INGRESS--------------------------------------------------------------------------------------------
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: java-app-ingress
+  namespace: white
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - pancit-canton.mlhuillier.net
+    secretName: net-tls
+  ingressClassName: nginx
+  rules:
+  - host: pancit-canton.mlhuillier.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: java-app-service
+            port:
+              number: 80
