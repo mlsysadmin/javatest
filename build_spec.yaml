@@ -76,6 +76,6 @@ steps:
 #      docker build --pull --rm -t javatest .
 
 outputArtifacts:
-  - name: javatest
+  - name: output01
     type: DOCKER_IMAGE
     location: javatest:latest
