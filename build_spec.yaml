@@ -72,12 +72,10 @@ steps:
     timeoutInSeconds: 1200
     name: "Build container image"
     command: |
-      cd ${OCI_WORKSPACE_DIR}/github_OCI-DevOps-Java
-      docker build --pull --rm -t oci_devops_java_app .
+      cd ${OCI_WORKSPACE_DIR}/OCI-DevOps-Java-main(working)
+      docker build --pull --rm -t javatest .
 
 outputArtifacts:
-  - name: output01
+  - name: javatest
     type: DOCKER_IMAGE
-    # this location tag doesn't effect the tag used to deliver the container image
-    # to the Container Registry
-    location: oci_devops_java_app:latest
+    location: javatest:latest
